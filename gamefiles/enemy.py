@@ -19,3 +19,9 @@ class Enemy(Gameobject):
         enemy_img = pygame.transform.scale(pic, (pic.get_width() / 5, pic.get_height() / 5))
         screen.blit(enemy_img, self.__position)
 
+    def get_stuff(self, stuff):
+        if stuff.lower() == "position":
+            return self.__position
+        elif stuff.lower() == "image":
+            return self.__image
+
