@@ -19,6 +19,7 @@ class Player(Gameobject):
             self.position[1] -= 10
     
     def draw(self, screen):
-        player_img = pygame.image.load(Picture(self.picture).get_picture()).convert()
+        pi = pygame.image.load(Picture(self.picture).get_picture()).convert()
+        player_img = pygame.transform.scale(pi, (pi.get_width() / 5, pi.get_height() / 5))
         screen.blit(player_img, self.position)
 
