@@ -1,6 +1,7 @@
 import pygame
 from constants import screen_width, screen_length
 from player import Player
+from enemy import Enemy
 def main():
     #just like git init we make the game file
     pygame.init()
@@ -12,6 +13,8 @@ def main():
     #groups
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    Enemy.containers = (updatable, drawable)
+    enemy = Enemy(screen_width / 2, screen_length / 2)
     Player.containers = (updatable, drawable)
     player = Player(screen_width / 2, screen_length / 2)
     running = True
@@ -24,7 +27,12 @@ def main():
                 #if so turn the running to False so the while loop can stop
                 running = False
         for thing in updatable:
-            thing.update()
+            if isinstance(thing, Enemy):
+                thing.update(player)
+            else:
+                thing.update()
+            
+            
         
         for thing in drawable:
             thing.draw(screen)
