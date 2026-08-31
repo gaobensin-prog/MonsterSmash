@@ -2,6 +2,7 @@ import pygame
 from constants import screen_width, screen_length
 from player import Player
 from enemy import Enemy
+from spawner import Spawner
 def main():
     #just like git init we make the game file
     pygame.init()
@@ -17,6 +18,8 @@ def main():
     enemy = Enemy(screen_width / 2, screen_length / 2)
     Player.containers = (updatable, drawable)
     player = Player(screen_width / 2, screen_length / 2)
+    Spawner.containers = (updatable, drawable)
+    spawner = Spawner(screen)
     running = True
     while running:
         screen.fill("white")
@@ -29,11 +32,10 @@ def main():
         for thing in updatable:
             if isinstance(thing, Enemy):
                 thing.update(player)
+            elif isinstance(thing, Spawner):
+                thing.update(dt)
             else:
                 thing.update()
-            
-            
-        
         for thing in drawable:
             thing.draw(screen)
         #put everything on the screen
