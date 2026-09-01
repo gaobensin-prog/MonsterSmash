@@ -28,3 +28,4 @@ class Player(Gameobject):
             return self.__position
         elif stuff.lower() == "image":
             return Picture(self.__picture).get_picture()
+    
