@@ -31,7 +31,7 @@ def main():
                 running = False
         for thing in updatable:
             if isinstance(thing, Enemy):
-                thing.update(player)
+                thing.update(player, dt)
             elif isinstance(thing, Spawner):
                 thing.update(dt)
             else:
