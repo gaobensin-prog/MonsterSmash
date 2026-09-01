@@ -11,9 +11,11 @@ class Enemy(Gameobject):
     
     def update(self, player):
         if self.__position[0] != player.get_stuff("position")[0]:
-            self.__position[0] += 1
-            self.__position[1] += 1
-
+            distance = player.get_stuff("position")[0] - self.__position[0]
+            self.__position[0] = player.get_stuff("position")[0] - 1
+        if self.__position[1] != player.get_stuff("position")[1]:
+            distance = player.get_stuff("position")[1] - self.__position[1]
+            self.__position[1] = player.get_stuff("position")[1] - 1
     def draw(self, screen: object):
         pic = pygame.image.load(Picture(self.__image).get_picture()).convert()
         enemy_img = pygame.transform.scale(pic, (pic.get_width() / 5, pic.get_height() / 5))
