@@ -1,5 +1,31 @@
 DevLog on v0.0.0:
 (9/2/2026):
+2. Add Timer System
+
+Code:
+
+    class Timer(Gameobject):
+        def __init__(self):
+            super().__init__()
+            self.time = 50
+            self.rect = pygame.Rect(10, 5, 20, 10)
+        def draw(self, screen, dt):
+            self.time -= dt
+            font = pygame.font.Font(None, 32)
+            time = font.render(str(round(self.time)), False, "red")
+            screen.blit(time, (self.rect.x, self.rect.y))
+
+Explanation:
+
+This Timer class will be use to determine if a wave has ended or not.
+
+Logic:
+
+Inherits from the Gameobject so that we can add it to a group to illerate over has a set time of 50 and a Rect() object.
+
+In the draw method it takes two arguments a screen object and a dt float value.
+
+Subtract dt from self.time to simulate the Timer counting down. Then use pygame.font.Font to make a font object which is then render into a surface object since the render first argument have to be a str and in order to not display a float value the value after the dt and self.time operation is rounded then change the typing to a str, which is then plug into screen.blit to display it at the Rect() object location.
 
 1.Add Hitbox Logic
 

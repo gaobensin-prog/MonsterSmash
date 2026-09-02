@@ -4,6 +4,7 @@ from player import Player
 from enemy import Enemy
 from spawner import Spawner
 import random
+from timer import Timer
 def main():
     #just like git init we make the game file
     pygame.init()
@@ -21,6 +22,8 @@ def main():
     player = Player(screen, screen_width / 2, screen_length / 2)
     Spawner.containers = (updatable, drawable)
     spawner = Spawner(screen)
+    Timer.containers = (drawable,)
+    timer = Timer()
     running = True
     while running:
         screen.fill("white")
@@ -42,7 +45,10 @@ def main():
             else:
                 thing.update()
         for thing in drawable:
-            thing.draw(screen)
+            if isinstance(thing, Timer):
+                thing.draw(screen, dt)
+            else:
+                thing.draw(screen)
         #put everything on the screen
         pygame.display.flip()
         dt = clock.tick(60) / 1000
