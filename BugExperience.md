@@ -1,5 +1,43 @@
 v0.0.0
 Bugs on (9/1/2026):
+
+4. The Timer() object not being drawn.
+
+Code:
+    
+    class Timer(Gameobject):
+        def __init__(self):
+            super().__init__()
+            self.time = 100
+            self.rect = pygame.Rect(10, 5, 20, 10)
+        def draw(self, screen, dt):
+            self.time -= dt
+            time = pygame.font.Font.render(str(round(self.time)), False, "red")
+            screen.blit(time, (self.rect.x, self.rect.y))
+
+Problem:
+
+This was my very first implenmentation the first poblem that came up was my lack of understanding of what class.containers actually accpet as a argument. So I was doing Timer.containers = (drawable) which threw me an error because it was not a tuple.
+
+After that was resolved by doing (drawable,) to make it a tuple. Another, problem arose it was the miss use of the pygame.font.Font.render() I was rending a class object instead of a font object.
+
+Code:
+
+    class Timer(Gameobject):
+        def __init__(self):
+            super().__init__()
+            self.time = 50
+            self.rect = pygame.Rect(10, 5, 20, 10)
+        def draw(self, screen, dt):
+            self.time -= dt
+            font = pygame.font.Font(None, 32)
+            time = font.render(str(round(self.time)), False, "red")
+            screen.blit(time, (self.rect.x, self.rect.y))
+
+Solution:
+
+It was to create a Font object then use the render() function to create a Surface object of that font which is then paste into screen.blit to displayed it on the screen.
+
 3.Spawner class spawning enemy on a certain spot instead of spawning in a random (x,y)
 
 When running the game the Spawner class only spawn enemy on the bottom part of the screen.
