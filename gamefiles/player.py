@@ -33,8 +33,10 @@ class Player(Gameobject):
         
     
     def draw(self, screen):
-        pi = pygame.image.load(Picture(self.__picture).get_picture()).convert()
-        player_img = pygame.transform.scale(pi, (pi.get_width() / 5, pi.get_height() / 5))
+        pic = pygame.image.load(Picture(self.__picture).get_picture()).convert()
+        sizew = width_of_entity - pic.get_width()
+        sizeh = height_of_entity - pic.get_height()
+        player_img = pygame.transform.scale(pic, (pic.get_width() + sizew, pic.get_height() + sizeh))
         screen.blit(player_img, self.rect)
 
     def get_stuff(self, stuff: str) -> tuple:
