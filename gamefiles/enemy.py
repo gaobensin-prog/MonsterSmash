@@ -30,7 +30,7 @@ class Enemy(Gameobject):
         pic = pygame.image.load(Picture(self.__image).get_picture()).convert()
         sizew = width_of_entity - pic.get_width()
         sizeh = height_of_entity - pic.get_height()
-        enemy_img = pygame.transform.scale(pic, (pic.get_width() + sizew, pic.get_height() + sizeh))
+        enemy_img = pygame.transform.scale(pic, (pic.get_width() + sizew * 1.15, pic.get_height() + sizeh * 1.15))
         screen.blit(enemy_img, (self.rect.x, self.rect.y))
         
 
