@@ -25,7 +25,6 @@ class Player(Gameobject):
         if self.__position[0] < enemy.get_stuff("position")[0] and self.__position[1] < enemy.get_stuff("position")[1]:
             print(self.health)
             self.change_stat(self.health, enemy.attack, self.defense)
-        return True
     
     def draw(self, screen):
         pi = pygame.image.load(Picture(self.__picture).get_picture()).convert()
