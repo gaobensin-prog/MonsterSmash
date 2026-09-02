@@ -1,17 +1,19 @@
 from gameobject import Gameobject
 import pygame
 from getpictures import Picture
+import sys
 class Player(Gameobject):
     def __init__(self, x: int  , y: int, image: str = "player.png") -> None:
         super().__init__()
         self.__position = pygame.Vector2(x,y) 
         self.__picture = image
         self.atk = 1000
-        self.hp = 1000
-        self.defs = 50
-    def update(self):
+        self.health = 1000
+    def update(self, enemy):
         keys = pygame.key.get_pressed()
-
+        if self.health <= 0:
+            self.kill()
+            return
         if keys[pygame.K_a]:
             self.__position[0] -= 10
         if keys[pygame.K_d]:
@@ -20,8 +22,10 @@ class Player(Gameobject):
             self.__position[1] += 10
         if keys[pygame.K_w]:
             self.__position[1] -= 10
-        if self.hp <= 0:
-            pygame.sprite.Sprite.kill(self)
+        if self.__position[0] < enemy.get_stuff("position")[0] and self.__position[1] < enemy.get_stuff("position")[1]:
+            print(self.health)
+            self.change_stat(self.health, enemy.attack, self.defense)
+        
     
     def draw(self, screen):
         pi = pygame.image.load(Picture(self.__picture).get_picture()).convert()
@@ -33,7 +37,3 @@ class Player(Gameobject):
             return self.__position
         elif stuff.lower() == "image":
             return Picture(self.__picture).get_picture()
-    
-    def attack(self, enemy):
-        if self.__position[0] == enemy.get_stuff("position")[0] and self.__position[1] == enemy.get_stuff("position")[1]:
-            enemy.change_stat(enemy.health, self.atk, enemy.defense)

@@ -29,11 +29,15 @@ def main():
             if event.type == pygame.QUIT:
                 #if so turn the running to False so the while loop can stop
                 running = False
+            if player not in updatable:
+                running = False
         for thing in updatable:
             if isinstance(thing, Enemy):
                 thing.update(player, dt)
             elif isinstance(thing, Spawner):
                 thing.update(dt)
+            elif isinstance(thing, Player):
+                thing.update(enemy)
             else:
                 thing.update()
         for thing in drawable:

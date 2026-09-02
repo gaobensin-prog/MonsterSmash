@@ -1,6 +1,47 @@
 MonsterSmash is inspired from those games where the character follows your cursor for movenment and it is a wave base system will you can upgrade your character and the levels get progressily harder as you advance.
 
-DevLog on v0.0.0 (8/31/26):
+DevLog on v0.0.0:
+(9/1/2026):
+    3.Bug with pygame.get.event() not closing when user press the close X:
+
+        Originally my plan was for the Player class update() method to check if the people is still alive if not I have it return False to the running variable named in my main.py but for some reason it breaks the pygame.get.event().
+
+            if self.health <= 0:
+                self.kill()
+                running = False
+        
+        It seem to be overwriting the if statement in the pygame.get.event().
+
+            if event.type == pygame.QUIT:
+                #if so turn the running to False so the while loop can stop
+                running = False
+        
+        So instead of doing it in the Player class I instead decide to add another if statement to see if the Player object is still in the Updatable group if not it pass False to the running variable making the game close.
+
+            if player not in updatable:
+                running = False
+
+    2.Enemy Attacking Player:
+
+        if self.__position[0] < enemy.get_stuff("position")[0] and self.__position[1] < enemy.get_stuff("position")[1]:
+            print(self.health)
+            self.change_stat(self.health, enemy.attack, self.defense)
+        
+        Explaination:
+        Logic a little flaw but the main idea of it is for the Enemy class to attack the Player class in a certain range.
+
+    
+    1.Enemy Removing Themselves from the Spawner List:
+
+        for enemy in self.list:
+            if enemy.health <= 0:
+                self.remove_from_list(enemy)
+    
+    Explaination:
+        The Spawner object in its draw method check if the enemy being append to the list of enemy being spawned in hp is equal to or below 0 if so delete the object from the list so that the draw method does not draw dead enemies.
+
+
+(8/31/2026)
     Enemy Tracking Player:
             
             def update(self, player):
