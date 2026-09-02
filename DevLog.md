@@ -1,4 +1,37 @@
 DevLog on v0.0.0:
+(9/2/2026):
+
+1.Add Hitbox Logic
+
+So the idea behind a hitbox is that when two object either touch the edge of each other hitbox or there Rect() object overlap with each other.
+
+Code:
+    #enemy class example
+    if (
+            self.rect.x - width_of_entity <= player.rect.x + width_of_entity / 2
+            and self.rect.x + width_of_entity >= player.rect.x - width_of_entity / 2
+            and self.rect.y - height_of_entity <= player.rect.y + height_of_entity / 2
+            and self.rect.y + height_of_entity >= player.rect.y - height_of_entity / 2
+        ):
+            self.change_stat(self.health, player.attack, self.defense)
+Explanation:
+
+The idea is to find the point to the left most bottom and also the point to the right most top.
+To do this I take the x from the class self.rect and - it by a constant variable now normally that constant variable will be / by 2 to get the actual half point width but I wanted the player class to have twice the range so I keep the width and height the orginal amount which is double the actual value for those. 
+
+But in order to actually get the points first both width and height need to be / by 2 because the way pygame draw the Rect() is by starting at the points give and exstanding left and right by 50 if the width parameter was 100 and top and bottom by 50 if the height paremeter was 100.
+
+Logic:
+
+The current class least x value have to be less than or equal to target class most x value.
+The current class most x value must be greater than or equal to target class mleast x value.
+The current class least y value have to be less than or equal to target class most y value.
+The current class most y value must be greater than or equal to target class mleast y value.
+
+If either of these condition is false than that means the hitbox are not touching or overlapping.
+
+
+
 (9/1/2026):
 
 3.Added a Rect() to Player and Enemy Class:
