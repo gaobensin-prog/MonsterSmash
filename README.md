@@ -2,6 +2,7 @@ MonsterSmash is inspired from those games where the character follows your curso
 
 DevLog on v0.0.0:
 (9/1/2026):
+
 5.Bug with Image not Loading on Rect() Object:
 
 When running the game I notice that when the Spawner spawn in new Enemy classes there will be a moment where the Rect() object spawn in before the image loads so my first instinct was to move the code that load the image after the code that draw the Rect()
