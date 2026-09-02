@@ -3,6 +3,7 @@ from constants import screen_width, screen_length
 from player import Player
 from enemy import Enemy
 from spawner import Spawner
+import random
 def main():
     #just like git init we make the game file
     pygame.init()
@@ -15,7 +16,7 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     Enemy.containers = (updatable, drawable)
-    enemy = Enemy(screen, screen_width / 2, screen_length / 2)
+    enemy = Enemy(screen)
     Player.containers = (updatable, drawable)
     player = Player(screen, screen_width / 2, screen_length / 2)
     Spawner.containers = (updatable, drawable)
