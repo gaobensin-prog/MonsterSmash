@@ -15,5 +15,11 @@ class Spawner(Gameobject):
             self.list.append(enemy)
             self.dt = 0
     def draw(self, screen):
+        for enemy in self.list:
+            if enemy.health <= 0:
+                self.remove_from_list(enemy)
         for i in range(len(self.list)):
             self.list[i].draw(screen)
+   
+    def remove_from_list(self, enemy):
+        self.list.remove(enemy)

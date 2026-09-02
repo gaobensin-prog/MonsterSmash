@@ -1,6 +1,12 @@
 MonsterSmash is inspired from those games where the character follows your cursor for movenment and it is a wave base system will you can upgrade your character and the levels get progressily harder as you advance.
 
-DevLog on v0.0.0 (8/31/26):
+DevLog on v0.0.0:
+(9/1/2026):
+    Enemy Attacking Player And Enemy Removing Themselves from the Spawner List:
+
+        
+
+(8/31/2026)
     Enemy Tracking Player:
             
             def update(self, player):

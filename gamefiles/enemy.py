@@ -3,7 +3,6 @@ import random
 from getpictures import Picture
 from constants import screen_width,screen_length
 import pygame
-from spawner import Spawner
 class Enemy(Gameobject):
     def __init__(self, x: int, y: int):
         super().__init__()
