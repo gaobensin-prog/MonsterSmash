@@ -1,5 +1,28 @@
 v0.0.0
 Bugs on (9/1/2026):
+3.Spawner class spawning enemy on a certain spot instead of spawning in a random (x,y)
+
+When running the game the Spawner class only spawn enemy on the bottom part of the screen.
+
+Code:
+
+    random_x = random.randint(screen_length, screen_width)
+    random_y = random.randint(screen_length, screen_width)
+
+Problem:
+
+Because the range for both is set to 720 to 1280 the Enemy can only spawn on the bottom of the screen.
+
+Fix:
+
+Therefore the solution is too just set the lower range for each to 0 and then it will spawn in random.
+
+Code:
+
+    random_x = random.randint(0, screen_width)
+    random_y = random.randint(0, screen_length)
+
+
 
 2.Bug with Image not Loading on Rect() Object:
 

@@ -4,7 +4,7 @@ from constants import width_of_entity,height_of_entity,screen_width,screen_lengt
 import pygame
 import random
 class Enemy(Gameobject):
-    def __init__(self, screen, x: int = random.randint(screen_length, screen_width), y: int = random.randint(screen_length, screen_width)):
+    def __init__(self, screen, x: int = 0, y: int = 0):
         super().__init__()
         self.__image = "enemy.png"
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
