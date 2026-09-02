@@ -2,6 +2,7 @@ MonsterSmash is inspired from those games where the character follows your curso
 
 DevLog on v0.0.0:
 (9/1/2026):
+
 3.Bug with pygame.get.event() not closing when user press the close X:
 
 Originally my plan was for the Player class update() method to check if the people is still alive if not I have it return False to the running variable named in my main.py but for some reason it breaks the pygame.get.event().
