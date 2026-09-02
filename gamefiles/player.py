@@ -13,7 +13,7 @@ class Player(Gameobject):
         keys = pygame.key.get_pressed()
         if self.health <= 0:
             self.kill()
-            running = False
+            return
         if keys[pygame.K_a]:
             self.__position[0] -= 10
         if keys[pygame.K_d]:
