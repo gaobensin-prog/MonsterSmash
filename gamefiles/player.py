@@ -13,7 +13,7 @@ class Player(Gameobject):
         keys = pygame.key.get_pressed()
         if self.health <= 0:
             self.kill()
-            return False
+            running = False
         if keys[pygame.K_a]:
             self.__position[0] -= 10
         if keys[pygame.K_d]:
@@ -25,6 +25,7 @@ class Player(Gameobject):
         if self.__position[0] < enemy.get_stuff("position")[0] and self.__position[1] < enemy.get_stuff("position")[1]:
             print(self.health)
             self.change_stat(self.health, enemy.attack, self.defense)
+        
     
     def draw(self, screen):
         pi = pygame.image.load(Picture(self.__picture).get_picture()).convert()
