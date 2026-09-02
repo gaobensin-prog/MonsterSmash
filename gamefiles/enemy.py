@@ -19,6 +19,7 @@ class Enemy(Gameobject):
         if self.__position[1] != player.get_stuff("position")[1]:
             distance = player.get_stuff("position")[1] - self.__position[1]
             self.__position[1] += distance * dt
+        
         if self.__position[0] < player.get_stuff("position")[0] and self.__position[1] < player.get_stuff("position")[1]:
             self.change_stat(self.health, player.atk, self.defense)
     
@@ -32,8 +33,4 @@ class Enemy(Gameobject):
             return self.__position
         elif stuff.lower() == "image":
             return self.__image
-    
-    def delete_from_spawner(self, spawner):
-        return
-        del spawner.list[self]
 

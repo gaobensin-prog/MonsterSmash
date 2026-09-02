@@ -2,9 +2,19 @@ MonsterSmash is inspired from those games where the character follows your curso
 
 DevLog on v0.0.0:
 (9/1/2026):
-    Enemy Attacking Player And Enemy Removing Themselves from the Spawner List:
+    2.Enemy Attacking Player:
 
         
+    
+    1.Enemy Removing Themselves from the Spawner List:
+
+        for enemy in self.list:
+            if enemy.health <= 0:
+                self.remove_from_list(enemy)
+    
+    Explaination:
+        The Spawner object in its draw method check if the enemy being append to the list of enemy being spawned in hp is equal to or below 0 if so delete the object from the list so that the draw method does not draw dead enemies.
+
 
 (8/31/2026)
     Enemy Tracking Player:

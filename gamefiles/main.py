@@ -34,6 +34,8 @@ def main():
                 thing.update(player, dt)
             elif isinstance(thing, Spawner):
                 thing.update(dt)
+            elif isinstance(thing, Player):
+                running = thing.update(enemy)
             else:
                 thing.update()
         for thing in drawable:
