@@ -1,5 +1,24 @@
 DevLog on v0.0.0:
 (9/2/2026):
+
+3. Add Health Bar for Player
+
+Logic:
+
+    Player class pygame.Rect(50,50,100,100)
+    (0,0)-------(0,50)-----(0,100)
+                  |
+                  |
+                  |
+    (0,50)-----(50,50)-----(100,50)
+                  |
+                  |
+                  |
+    (0,100)-----(50,100)-----(100,100)
+
+I want the health bar to be at (0,100) through (100,100) and to do that I have created a seperate Rect Object that will be drawn on the bottom of the player Rect().
+
+
 2. Add Timer System
 
 Code:
