@@ -15,9 +15,9 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     Enemy.containers = (updatable, drawable)
-    enemy = Enemy(screen_width / 2, screen_length / 2)
+    enemy = Enemy(screen, screen_width / 2, screen_length / 2)
     Player.containers = (updatable, drawable)
-    player = Player(screen_width / 2, screen_length / 2)
+    player = Player(screen, screen_width / 2, screen_length / 2)
     Spawner.containers = (updatable, drawable)
     spawner = Spawner(screen)
     running = True
@@ -33,9 +33,9 @@ def main():
                 running = False
         for thing in updatable:
             if isinstance(thing, Enemy):
-                thing.update(player, dt)
+                thing.update(player, dt, screen)
             elif isinstance(thing, Spawner):
-                thing.update(dt)
+                thing.update(dt, screen)
             elif isinstance(thing, Player):
                 thing.update(enemy)
             else:

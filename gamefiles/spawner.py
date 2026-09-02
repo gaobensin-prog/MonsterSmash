@@ -8,10 +8,10 @@ class Spawner(Gameobject):
         self.screen = screen
         self.list = []
         self.dt = 0
-    def update(self, dt):
-        self.dt += (dt * 10)
+    def update(self, dt, screen):
+        self.dt += (dt * 3)
         if self.dt > 1:
-            enemy = Enemy(screen_width / 2, screen_length / 2)
+            enemy = Enemy(screen, screen_width / 2, screen_length / 2)
             self.list.append(enemy)
             self.dt = 0
     def draw(self, screen):
