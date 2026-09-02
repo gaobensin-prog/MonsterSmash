@@ -2,13 +2,13 @@ from gameobject import Gameobject
 import pygame
 from getpictures import Picture
 import sys
+from constants import width_of_entity, height_of_entity
 class Player(Gameobject):
     def __init__(self, screen, x: int  , y: int, image: str = "player.png") -> None:
         super().__init__()
         self.__picture = image
-        self.atk = 1000
         self.health = 1000
-        self.rect = pygame.Rect(x, y, 300, 200)
+        self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
     def update(self, enemy):
         keys = pygame.key.get_pressed()
         if self.health <= 0:
@@ -22,7 +22,12 @@ class Player(Gameobject):
             self.rect.y += 10
         if keys[pygame.K_w]:
             self.rect.y -= 10
-        if self.rect.x < enemy.rect.x and self.rect.y < enemy.rect.y:
+        if (
+            self.rect.x - width_of_entity / 2  <= enemy.rect.x + width_of_entity / 2
+            and self.rect.x + width_of_entity / 2 >= enemy.rect.x - width_of_entity / 2
+            and self.rect.y - height_of_entity / 2 <= enemy.rect.y + height_of_entity / 2
+            and self.rect.y + height_of_entity / 2 >= enemy.rect.y - height_of_entity / 2
+        ):
             print(self.health)
             self.change_stat(self.health, enemy.attack, self.defense)
         

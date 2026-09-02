@@ -1,5 +1,4 @@
 from enemy import Enemy
-from constants import screen_width,screen_length
 import pygame
 from gameobject import Gameobject
 class Spawner(Gameobject):
@@ -9,9 +8,9 @@ class Spawner(Gameobject):
         self.list = []
         self.dt = 0
     def update(self, dt, screen):
-        self.dt += (dt * 3)
-        if self.dt > 1:
-            enemy = Enemy(screen, screen_width / 2, screen_length / 2)
+        self.dt += dt 
+        if self.dt >= 1:
+            enemy = Enemy(screen)
             self.list.append(enemy)
             self.dt = 0
     def draw(self, screen):
