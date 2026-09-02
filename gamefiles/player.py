@@ -9,7 +9,7 @@ class Player(Gameobject):
         self.__picture = image
         self.health = 1000
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
-        self.rect_hp = pygame.Rect(50, 50, width_of_entity, height_of_entity)
+        self.rect_hp = pygame.Rect(x, y * 2 + 20, width_of_entity, height_of_entity)
     def update(self, enemy):
         keys = pygame.key.get_pressed()
         if self.health <= 0:
@@ -17,12 +17,16 @@ class Player(Gameobject):
             return
         if keys[pygame.K_a]:
             self.rect.x -= 10
+            self.rect_hp.x -= 10
         if keys[pygame.K_d]:
             self.rect.x += 10
+            self.rect_hp.x += 10
         if keys[pygame.K_s]:
             self.rect.y += 10
+            self.rect_hp.y += 10
         if keys[pygame.K_w]:
             self.rect.y -= 10
+            self.rect_hp.y += 10
         if (
             self.rect.x - width_of_entity / 2  <= enemy.rect.x + width_of_entity / 2
             and self.rect.x + width_of_entity / 2 >= enemy.rect.x - width_of_entity / 2
