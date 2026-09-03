@@ -1,5 +1,10 @@
 DevLog on v0.0.0:
 (9/2/2026):
+
+4. Add Healthbar to Enemy class
+
+Same logic as the Player class Healthbar
+
 3. Add Healthbar to Player class
 
 Code:

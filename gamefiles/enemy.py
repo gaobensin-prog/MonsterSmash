@@ -10,17 +10,20 @@ class Enemy(Gameobject):
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
         self.rect_hp = pygame.Rect(self.rect.centerx, self.rect.centery, width_of_entity, height_of_entity)
         self.cooldown = 0
+        self.attack = 10
+        self.health = 100
+        self.defense = 2.5
     def update(self, player, dt, screen):
         if self.health <= 0:
             self.kill()
             return
-        if self.rect.x != player.rect.x:
-            distance = player.rect.x - self.rect.x
-            self.rect.x += distance * dt
+        if self.rect.centerx != player.rect.centerx:
+            distance = player.rect.centerx - self.rect.centerx
+            self.rect.centerx += distance * dt
             self.rect_hp.x += distance * dt
-        if self.rect.y != player.rect.y:
-            distance = player.rect.y - self.rect.y
-            self.rect.y += distance * dt
+        if self.rect.centery != player.rect.centery:
+            distance = player.rect.centery - self.rect.centery
+            self.rect.centery += distance * dt
             self.rect_hp.y += distance * dt
     
     def draw(self, screen: object):
