@@ -6,7 +6,6 @@ class Score(Gameobject):
         super().__init__()
         self.dead_enemy = dead_enemy
         self.score = 0
-        self.rect = pygame.Rect (1150, 0, 10, 10)
     
     def update(self, dead):
         self.dead_enemy = dead
@@ -15,4 +14,4 @@ class Score(Gameobject):
         self.score = len(self.dead_enemy)
         font = pygame.font.Font(None, 32)
         surface = font.render("Score = " + str(self.score), False, "red")
-        screen.blit(surface, (self.rect.x,self.rect.y))
+        screen.blit(surface, (1150, 0))
