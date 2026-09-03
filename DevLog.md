@@ -25,6 +25,21 @@ Explanation:
 
 Wave class is in the updatable group and when it is called the Timer class is pass into it and we extract the time from the Timer and if it is 0 we freeze everything on screen and wait for 5 sceonds then reset the timer.time back to a certain time.
 
+Code:
+    #in main.py
+    game_state = "playing" # Every loop will run
+    game_state = "upgrading" # only drawable group loop will run
+    def update(self, timer: object):
+        self.time = timer.time
+        if self.time <= 0:
+            return "upgrading"
+        return "playing"
+
+Explanation:
+
+The previous illulration freeze everything in the game so that means when I need to do the upgrade system later on it would not update so with the help of Copilot a cleaner way is just to stop certin gameplay loop like the updatable and attackable when the wave ended.
+
+
 (9/2/2026):
 
 5. Add Score
