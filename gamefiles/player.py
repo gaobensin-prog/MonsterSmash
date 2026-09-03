@@ -9,8 +9,9 @@ class Player(Gameobject):
         self.__picture = image
         self.health = 1000
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
-        self.rect_hp = pygame.Rect(x, y * 2 + 20, width_of_entity, height_of_entity)
-    def update(self, enemy):
+        self.rect_hp = pygame.Rect(self.rect.center[0], self.rect.center[1], width_of_entity, height_of_entity)
+        self.cooldown = 0
+    def update(self):
         keys = pygame.key.get_pressed()
         if self.health <= 0:
             self.kill()
@@ -26,15 +27,7 @@ class Player(Gameobject):
             self.rect_hp.y += 10
         if keys[pygame.K_w]:
             self.rect.y -= 10
-            self.rect_hp.y += 10
-        if (
-            self.rect.x - width_of_entity / 2  <= enemy.rect.x + width_of_entity / 2
-            and self.rect.x + width_of_entity / 2 >= enemy.rect.x - width_of_entity / 2
-            and self.rect.y - height_of_entity / 2 <= enemy.rect.y + height_of_entity / 2
-            and self.rect.y + height_of_entity / 2 >= enemy.rect.y - height_of_entity / 2
-        ):
-            self.change_stat(self.health, enemy.attack, self.defense)
-        
+            self.rect_hp.y -= 10
     
     def draw(self, screen):
         pic = pygame.image.load(Picture(self.__picture).get_picture()).convert()
@@ -52,3 +45,15 @@ class Player(Gameobject):
         health = pygame.font.Font(None, 32)
         surface = health.render(str(round(self.health)), False, "red")
         screen.blit(surface, (self.rect_hp.x, self.rect_hp.y))
+
+    def attacking(self, enemy, dt):
+        self.cooldown += dt
+        if (
+            self.rect.left * 2 <= enemy.rect.right
+            and self.rect.right * 2 >= enemy.rect.left
+            and self.rect.bottom * 2 >= enemy.rect.top
+            and self.rect.top * 2 <= enemy.rect.bottom
+            and self.cooldown >= 1
+        ):
+            enemy.change_stat(enemy.health, self.attack, enemy.defense)
+            self.cooldown = 0
