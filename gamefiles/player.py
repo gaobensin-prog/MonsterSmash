@@ -56,4 +56,4 @@ class Player(Gameobject):
             and self.cooldown >= 1
         ):
             enemy.change_stat(enemy.health, self.attack, enemy.defense)
-            self.cooldown = 0
+            self.cooldown = 0 
