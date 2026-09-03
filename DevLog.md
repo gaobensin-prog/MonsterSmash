@@ -1,6 +1,14 @@
 DevLog on v0.0.0:
 (9/2/2026):
+3. Add Healthbar to Player class
 
+Code:
+
+    health = pygame.font.Font(None, 32)
+        surface = health.render(str(round(self.health)), False, "red")
+        screen.blit(surface, (self.rect_hp.x, self.rect_hp.y))
+
+Same idea has the Timer System
 
 2. Add Timer System
 

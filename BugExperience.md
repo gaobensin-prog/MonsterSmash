@@ -3,6 +3,24 @@ Bugs on (9/1/2026):
 
 5. Collision Seem to be Off after adding a health bar to Player.
 
+Problem my logic for the collision was not right I thought the x,y for pygame.Rect was the center turn out it was the top left so it mess my whole hitbox up. The fix was to just use the rect.right,.left.top.bottom to compare sides.
+
+Code:
+
+    def attacking(self, player, dt):
+        self.cooldown += dt
+        if (
+            self.rect.left <= player.rect.right
+            and self.rect.right >= player.rect.left
+            and self.rect.bottom >= player.rect.top
+            and self.rect.top <= player.rect.bottom
+            and self.cooldown >= 1
+        ):
+            player.change_stat(player.health, self.attack, player.defense)
+            self.cooldown = 0
+
+
+
 4. The Timer() object not being drawn.
 
 Code:
