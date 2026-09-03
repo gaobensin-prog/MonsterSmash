@@ -16,10 +16,11 @@ def main():
     #groups
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
-    Enemy.containers = (updatable, drawable)
+    attackable = pygame.sprite.Group()
+    Enemy.containers = (updatable, drawable, attackable)
     enemy = Enemy(screen)
-    Player.containers = (updatable, drawable)
-    player = Player(screen, screen_width / 2, screen_length / 2)
+    Player.containers = (updatable, drawable, attackable)
+    player = Player(screen, 50, 50)
     Spawner.containers = (updatable, drawable)
     spawner = Spawner(screen)
     Timer.containers = (drawable,)
@@ -41,7 +42,7 @@ def main():
             elif isinstance(thing, Spawner):
                 thing.update(dt, screen)
             elif isinstance(thing, Player):
-                thing.update(enemy)
+                thing.update()
             else:
                 thing.update()
         for thing in drawable:
@@ -49,6 +50,10 @@ def main():
                 thing.draw(screen, dt)
             else:
                 thing.draw(screen)
+        for thing in attackable:
+            for target in attackable:
+                if target is not thing:
+                    thing.attacking(target, dt)
         #put everything on the screen
         pygame.display.flip()
         dt = clock.tick(60) / 1000

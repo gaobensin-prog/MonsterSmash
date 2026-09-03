@@ -4,10 +4,11 @@ from constants import width_of_entity,height_of_entity,screen_width,screen_lengt
 import pygame
 import random
 class Enemy(Gameobject):
-    def __init__(self, screen, x: int = 0, y: int = 0):
+    def __init__(self, screen, x: int = -1000, y: int = -1000):
         super().__init__()
         self.__image = "enemy.png"
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
+        self.cooldown = 0
     def update(self, player, dt, screen):
         if self.health <= 0:
             self.kill()
@@ -18,13 +19,6 @@ class Enemy(Gameobject):
         if self.rect.y != player.rect.y:
             distance = player.rect.y - self.rect.y
             self.rect.y += distance * dt
-        if (
-            self.rect.x - width_of_entity <= player.rect.x + width_of_entity / 2
-            and self.rect.x + width_of_entity >= player.rect.x - width_of_entity / 2
-            and self.rect.y - height_of_entity <= player.rect.y + height_of_entity / 2
-            and self.rect.y + height_of_entity >= player.rect.y - height_of_entity / 2
-        ):
-            self.change_stat(self.health, player.attack, self.defense)
     
     def draw(self, screen: object):
         pic = pygame.image.load(Picture(self.__image).get_picture()).convert()
@@ -37,4 +31,16 @@ class Enemy(Gameobject):
     def get_stuff(self, stuff):
         if stuff.lower() == "image":
             return self.__image
+
+    def attacking(self, player, dt):
+        self.cooldown += dt
+        if (
+            self.rect.left <= player.rect.right
+            and self.rect.right >= player.rect.left
+            and self.rect.bottom >= player.rect.top
+            and self.rect.top <= player.rect.bottom
+            and self.cooldown >= 1
+        ):
+            player.change_stat(player.health, self.attack, player.defense)
+            self.cooldown = 0
 
