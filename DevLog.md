@@ -1,4 +1,15 @@
 DevLog on v0.0.0:
+
+(9/3/2026):
+
+1. Add Wave System
+
+Pre-Logic:
+
+It should inherit from the Gameobject class, and it should take in the time from the Timer class and see if it reach 0 if so pause the game, and let the Player choose a upgrade to themselves. After 30 seconds or when the Player clicked continue it should unpause the game and increase the diffcultly by increasing the spawn rate of the enemy and increasing there stats also.
+
+
+
 (9/2/2026):
 
 5. Add Score
