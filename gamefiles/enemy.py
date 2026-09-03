@@ -9,6 +9,9 @@ class Enemy(Gameobject):
         self.__image = "enemy.png"
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
         self.cooldown = 0
+        self.attack = 10
+        self.health = 100
+        self.defense = 2.5
     def update(self, player, dt, screen):
         if self.health <= 0:
             self.kill()

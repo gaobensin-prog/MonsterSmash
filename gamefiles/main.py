@@ -5,6 +5,7 @@ from enemy import Enemy
 from spawner import Spawner
 import random
 from timer import Timer
+from score import Score
 def main():
     #just like git init we make the game file
     pygame.init()
@@ -25,6 +26,8 @@ def main():
     spawner = Spawner(screen)
     Timer.containers = (drawable,)
     timer = Timer()
+    Score.containers = (drawable, updatable)
+    score = Score()
     running = True
     while running:
         screen.fill("white")
@@ -43,6 +46,8 @@ def main():
                 thing.update(dt, screen)
             elif isinstance(thing, Player):
                 thing.update()
+            elif isinstance(thing, Score):
+                thing.update(spawner.dead)
             else:
                 thing.update()
         for thing in drawable:
@@ -50,10 +55,10 @@ def main():
                 thing.draw(screen, dt)
             else:
                 thing.draw(screen)
-        for thing in attackable:
+        for attacker in attackable:
             for target in attackable:
-                if target is not thing:
-                    thing.attacking(target, dt)
+                if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
+                    attacker.attacking(target, dt)
         #put everything on the screen
         pygame.display.flip()
         dt = clock.tick(60) / 1000
