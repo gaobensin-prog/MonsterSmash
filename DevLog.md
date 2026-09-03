@@ -1,6 +1,29 @@
 DevLog on v0.0.0:
 (9/2/2026):
 
+5. Add Score
+
+Explanation:
+
+In the Spawner class I add a new dead enemy list, I looped through the list of enemy that the spawner produce and see how much of them is dead in it and if so I append them into the new dead enemy list and return the len() them reset it.
+
+Code: 
+    #spawner class
+    for enemy in self.enemy:
+            if enemy.health <= 0:
+                self.dead.append(enemy)
+                self.enemy.remove(enemy)
+    
+    #score class
+        def draw(self, screen):
+            self.score = len(self.dead_enemy)
+            self.dead_enemy = []
+            font = pygame.font.Font(None, 32)
+            surface = font.render("Score = " + str(self.score), False, "red")
+            screen.blit(surface, (self.rect.x,self.rect.y))
+
+The current list of dead enemy in spawner never resets, but it will when I finished my Wave class.
+
 4. Add Healthbar to Enemy class
 
 Same logic as the Player class Healthbar

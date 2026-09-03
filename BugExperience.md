@@ -1,9 +1,111 @@
 v0.0.0
 Bugs on (9/1/2026):
 
+6. Even When the Player Attack is set to 1000 the Enemy is somehow only taking 10 damage but when the Player is at the topleft section of the screen somehow the attack it revert by to 1000.
+
+Explanation:
+
+Okay so this was actually a multiple problems happening at once. Let me explain how I trace through and arrive at the solutions.
+
+Code:
+
+    if (
+            self.rect.left * 2 <= enemy.rect.right 
+            and self.rect.right * 2 >= enemy.rect.left 
+            and self.rect.bottom * 2 >= enemy.rect.top 
+            and self.rect.top * 2 <= enemy.rect.bottom 
+        ):
+            object.change_stat(object.health, self.attack, object.defs)
+
+This was the orginal code behind the class attacking each other, not going to lie I did also asked Copilot to help me with what is going on it was suggesting that I there was so code in my codebase that revert my Player Attack to 10 and that my parent class Gameobject is actually the problem with addition to my collision logic being wrong which of the only part that it got right.
+
+Code:
+
+    class Gameobject(pygame.sprite.Sprite):
+        def __init__(self, atk = attack, hp = health, defs = defense) -> None:
+            if hasattr(self, "containers"):
+                super().__init__(*self.containers)
+                self.attack = atk
+                self.health = hp
+                self.defense = defs
+            else:
+                super().__init__()
+                self.attack = atk
+                self.health = hp
+                self.defense = defs
+        
+        def update(self):
+            raise ValueError("Each Class need its own Update() Method!")
+        
+        def change_stat(self, hp, atk, defs):
+            new_hp = hp - (atk - defs)
+            self.health = new_hp
+
+This is the parent class of both Player and Enemy class, I knew that the child class only use the parent's attitudes when it itself did not declare one yet for example in the case of my Player class I declared its attack to be 1000 so it will never use the parent's attack stat. And against my better judgment I decide to use Copliot suggestion which is to remove the default value of the parent but I went ahead and just deleted the parameter all together.
+
+Code:
+
+    class Gameobject(pygame.sprite.Sprite):
+        def __init__(self) -> None:
+            if hasattr(self, "containers"):
+                super().__init__(*self.containers)
+            else:
+                super().__init__()
+        
+        def update(self):
+            raise ValueError("Each Class need its own Update() Method!")
+        
+        def change_stat(self, hp, atk, defs):
+            new_hp = hp - (atk - defs)
+            self.health = new_hp
+
+And of course the problem was not fix at all because the parent class was never the problem.
+
+Solution:
+
+There is actually two main problems. 
+
+First, my collision logic was dookie I figure this what when I printed the Player attack everytime it attacked and also the enemy that spawn in behind the player does not seem to be attacked by the player but they still take 10 damage per sec while the enemy that spawn in at the bottom side of the Player get attacked for the full 1000.
+
+Second, after I realized that I figure it out the enemy was actually attacking themselves!! 
+
+Code: 
+
+    for attacker in attackable:
+            for target in attackable:
+                if target is not attacker:
+                    attacker.attacking(target, dt)
+
+This code take the first item of the attackable group as the attacker and the second item as the target the if statement only prevent them from  attacking itself but it never prevent the attacker from attacking a instance of themselves!!
+
+The Fix:
+
+    for attacker in attackable:
+            for target in attackable:
+                if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
+                    attacker.attacking(target, dt)
+
+After I added the additional check and fix up my collision logic for the player everything was fixed.
+
+
 5. Collision Seem to be Off after adding a health bar to Player.
 
 Problem my logic for the collision was not right I thought the x,y for pygame.Rect was the center turn out it was the top left so it mess my whole hitbox up. The fix was to just use the rect.right,.left.top.bottom to compare sides.
+
+Adter some deep dive again it seem like my attempt to increase the player range by 2 times was not the right logic 
+
+Code:
+
+    if (
+            self.rect.left * 2 <= enemy.rect.right 
+            and self.rect.right * 2 >= enemy.rect.left 
+            and self.rect.bottom * 2 >= enemy.rect.top 
+            and self.rect.top * 2 <= enemy.rect.bottom 
+        ):
+
+To be honest, I don't fully gasp why this doesn't work it, it should just double the player reach but it doesn't
+My next step is too proporty just using another Rect() object and have it be the actual reach of the Player.
+
 
 Code:
 
