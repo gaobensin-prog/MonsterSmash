@@ -8,20 +8,17 @@ class Enemy(Gameobject):
         super().__init__()
         self.__image = "enemy.png"
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
-        self.rect_hp = pygame.Rect(self.rect.centerx, self.rect.centery, width_of_entity, height_of_entity)
         self.cooldown = 0
     def update(self, player, dt, screen):
         if self.health <= 0:
             self.kill()
             return
-        if self.rect.x != player.rect.x:
-            distance = player.rect.x - self.rect.x
-            self.rect.x += distance * dt
-            self.rect_hp.x += distance * dt
-        if self.rect.y != player.rect.y:
-            distance = player.rect.y - self.rect.y
-            self.rect.y += distance * dt
-            self.rect_hp.y += distance * dt
+        if self.rect.centerx != player.rect.centerx:
+            distance = player.rect.centerx - self.rect.centerx
+            self.rect.centerx += distance * dt
+        if self.rect.centery != player.rect.centery:
+            distance = player.rect.centery - self.rect.centery
+            self.rect.centery += distance * dt
     
     def draw(self, screen: object):
         pic = pygame.image.load(Picture(self.__image).get_picture()).convert()
@@ -42,7 +39,7 @@ class Enemy(Gameobject):
             self.rect.left <= player.rect.right
             and self.rect.right >= player.rect.left
             and self.rect.bottom >= player.rect.top
-            and self.rect.top <= player.rect.bottom
+            and self.rect.top  <= player.rect.bottom
             and self.cooldown >= 1
         ):
             player.change_stat(player.health, self.attack, player.defense)
@@ -51,4 +48,4 @@ class Enemy(Gameobject):
     def healthbar(self, screen):
         health = pygame.font.Font(None, 20)
         surface = health.render(str(round(self.health)), False, "red")
-        screen.blit(surface, (self.rect_hp.x, self.rect_hp.y))
+        screen.blit(surface, (self.rect.topleft))
