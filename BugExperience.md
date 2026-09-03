@@ -1,4 +1,8 @@
 v0.0.0
+
+
+
+
 Bugs on (9/1/2026):
 
 6. Even When the Player Attack is set to 1000 the Enemy is somehow only taking 10 damage but when the Player is at the topleft section of the screen somehow the attack it revert by to 1000.
