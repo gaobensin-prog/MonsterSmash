@@ -1,6 +1,18 @@
 v0.0.0
 
+Bugs on (9/3/2026):
 
+1. Calling a attribute from a int object in Timer class
+
+Code:
+
+     self.time = time.time
+
+Solution:
+
+Seem like I need to switch the arguments of that method.
+
+I was wrong I meant to pass the Timer() class into the Wave() class but end up passing Timer().time instead so it was a int.
 
 
 Bugs on (9/1/2026):

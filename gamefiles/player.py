@@ -11,6 +11,7 @@ class Player(Gameobject):
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
         self.cooldown = 0
         self.attack = 1000
+        self.defense = 2.5
     def update(self):
         keys = pygame.key.get_pressed()
         if self.health <= 0:
@@ -18,16 +19,12 @@ class Player(Gameobject):
             return
         if keys[pygame.K_a]:
             self.rect.centerx -= 10
-            self.rect_hp.x -= 10
         if keys[pygame.K_d]:
             self.rect.centerx += 10
-            self.rect_hp.x += 10
         if keys[pygame.K_s]:
             self.rect.centery += 10
-            self.rect_hp.y += 10
         if keys[pygame.K_w]:
             self.rect.centery -= 10
-            self.rect_hp.y -= 10
     
     def draw(self, screen):
         pic = pygame.image.load(Picture(self.__picture).get_picture()).convert()

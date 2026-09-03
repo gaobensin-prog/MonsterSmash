@@ -6,6 +6,7 @@ from spawner import Spawner
 import random
 from timer import Timer
 from score import Score
+from wave import Wave
 def main():
     #just like git init we make the game file
     pygame.init()
@@ -28,6 +29,8 @@ def main():
     timer = Timer()
     Score.containers = (drawable, updatable)
     score = Score()
+    Wave.containers = (updatable,)
+    wave = Wave()
     running = True
     while running:
         screen.fill("white")
@@ -49,7 +52,7 @@ def main():
             elif isinstance(thing, Score):
                 thing.update(spawner.dead)
             else:
-                thing.update()
+                thing.update(timer)
         for thing in drawable:
             if isinstance(thing, Timer):
                 thing.draw(screen, dt)
