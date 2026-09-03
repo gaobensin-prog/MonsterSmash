@@ -9,4 +9,4 @@ class Wave(Gameobject):
         self.time = timer.time
         if self.time <= 0:
             pygame.time.wait(5000)
-            timer.time = 10
+            timer.time = 15
