@@ -13,7 +13,6 @@ class Score(Gameobject):
     
     def draw(self, screen):
         self.score = len(self.dead_enemy)
-        self.dead_enemy = []
         font = pygame.font.Font(None, 32)
         surface = font.render("Score = " + str(self.score), False, "red")
         screen.blit(surface, (self.rect.x,self.rect.y))

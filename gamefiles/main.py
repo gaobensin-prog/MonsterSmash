@@ -32,6 +32,7 @@ def main():
     Wave.containers = (updatable,)
     wave = Wave()
     running = True
+    game_state = "playing"
     while running:
         screen.fill("white")
         #check what the player is clicking on in the game
@@ -42,26 +43,27 @@ def main():
                 running = False
             if player not in updatable:
                 running = False
-        for thing in updatable:
-            if isinstance(thing, Enemy):
-                thing.update(player, dt, screen)
-            elif isinstance(thing, Spawner):
-                thing.update(dt, screen)
-            elif isinstance(thing, Player):
-                thing.update()
-            elif isinstance(thing, Score):
-                thing.update(spawner.dead)
-            else:
-                thing.update(timer)
+        if game_state == "playing":
+            for thing in updatable:
+                if isinstance(thing, Enemy):
+                    thing.update(player, dt, screen)
+                elif isinstance(thing, Spawner):
+                    thing.update(dt, screen)
+                elif isinstance(thing, Player):
+                    thing.update()
+                elif isinstance(thing, Score):
+                    thing.update(spawner.dead)
+                else:
+                    game_state = thing.update(timer)
+            for attacker in attackable:
+                for target in attackable:
+                    if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
+                        attacker.attacking(target, dt)
         for thing in drawable:
             if isinstance(thing, Timer):
                 thing.draw(screen, dt)
             else:
                 thing.draw(screen)
-        for attacker in attackable:
-            for target in attackable:
-                if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
-                    attacker.attacking(target, dt)
         #put everything on the screen
         pygame.display.flip()
         dt = clock.tick(60) / 1000
