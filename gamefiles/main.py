@@ -19,7 +19,7 @@ def main():
     Enemy.containers = (updatable, drawable)
     enemy = Enemy(screen)
     Player.containers = (updatable, drawable)
-    player = Player(screen, screen_width / 2, screen_length / 2)
+    player = Player(screen, 50, 50)
     Spawner.containers = (updatable, drawable)
     spawner = Spawner(screen)
     Timer.containers = (drawable,)

@@ -1,6 +1,8 @@
 v0.0.0
 Bugs on (9/1/2026):
 
+5. Collision Seem to be Off after adding a health bar to Player.
+
 4. The Timer() object not being drawn.
 
 Code:
