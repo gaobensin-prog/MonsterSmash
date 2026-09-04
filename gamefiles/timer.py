@@ -4,7 +4,7 @@ from constants import wave_timer
 class Timer(Gameobject):
     def __init__(self):
         super().__init__()
-        self.time = wave_timer
+        self.time = 0
     def draw(self, screen, dt):
         if self.time > 0:
             self.time -= dt

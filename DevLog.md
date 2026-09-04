@@ -1,5 +1,37 @@
 DevLog on v0.0.0:
 
+(9/4/2026):
+
+1. Add Upgrade Option 
+
+Logic:
+
+Whenever the Timer().time reach 0 and it enter game_state "upgrading" three options should pop up that let the Player choose what upgrade they want.
+
+Code:
+
+    class Upgrade(Gameobject):
+        def __init__(self):
+            super().__init__()
+            self.option1 = pygame.Rect(100, 100, 300, 400)
+            self.option2 = pygame.Rect(500, 100, 300, 400)
+            self.option3 = pygame.Rect(900, 100, 300, 400)
+            self.option_list = [self.option1, self.option2, self.option3]
+        def draw(self, screen, stats):
+            for option in self.option_list:
+                pygame.draw.rect(screen, "black", option, 1)
+            font = pygame.font.Font(None, 32)
+            count = 0
+            for key in stats:
+                for i in range(count,count + 1):
+                    message = font.render(f"Current {key} is: {str(stats[key])}", False, "red")
+                    screen.blit(message, (self.option_list[i].centerx - 100, self.option_list[i].centery - 100))
+                    count += 1
+Explanation:
+
+Create three Rect() object as a way for Player to click on which has not been completed yet.
+Draw() take the Player Stats as a dictonary to illirate over and display the stats in the Rect(). Soon the Player will be able to upgrade each stat after I code it.
+
 (9/3/2026):
 
 1. Add Wave System

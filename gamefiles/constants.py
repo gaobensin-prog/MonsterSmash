@@ -6,5 +6,5 @@ attack = 10
 width_of_entity = 100
 height_of_entity = 100
 player_range = 2
-wave_timer = 50
+wave_timer = 60
 upgrade_timer = 30
