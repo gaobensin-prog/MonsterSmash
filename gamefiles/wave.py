@@ -1,5 +1,6 @@
 from gameobject import Gameobject
 import pygame
+from constants import upgrade_timer
 class Wave(Gameobject):
     def __init__(self):
         super().__init__()
@@ -7,7 +8,7 @@ class Wave(Gameobject):
     def update(self, dt, time):
         if time <= 0 :
             self.upgrade_time += dt
-            if self.upgrade_time >= 10:
+            if self.upgrade_time >= upgrade_timer:
                 self.upgrade_time = 0
                 return "playing"
             return "upgrading"
