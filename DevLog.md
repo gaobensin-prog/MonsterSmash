@@ -39,7 +39,7 @@ Explanation:
 
 The previous illulration freeze everything in the game so that means when I need to do the upgrade system later on it would not update so with the help of Copilot a cleaner way is just to stop certin gameplay loop like the updatable and attackable when the wave ended.
 
-
+Im have to continue this tomorrow mad tried.
 (9/2/2026):
 
 5. Add Score

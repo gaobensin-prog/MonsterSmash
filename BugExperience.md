@@ -1,6 +1,52 @@
 v0.0.0
 
 Bugs on (9/3/2026):
+2. Wave class not reseting the Timer class self.time when the 10 seconds of time for upgrading is up
+
+I was trying to set the Timer class value inside the Wave class which was not working because that means I was creating another instance of a Timer class and not the original one that exist in main.py 
+
+Code:
+
+    class Wave(Gameobject):
+        def __init__(self,timer):
+            super().__init__()
+            self.timer =timer
+            self.upgrade_time = 0
+        def update(self, dt, time):
+            if time <= 0 :
+                self.upgrade_time += dt
+                if self.upgrade_time >= 10:
+                    self.upgrade_time = 0
+                    self.timer.time = 10
+                    return "playing"
+                return "upgrading"
+            return "playing"
+Solution:
+
+Code:
+
+    class Wave(Gameobject):
+        def __init__(self):
+            super().__init__()
+            self.upgrade_time = 0
+        def update(self, dt, time):
+            if time <= 0 :
+                self.upgrade_time += dt
+                if self.upgrade_time >= 10:
+                    self.upgrade_time = 0
+                    return "playing"
+                return "upgrading"
+            return "playing"
+
+    #main.py
+    if game_state == "upgrading":
+            for thing in updatable:
+                if isinstance(thing, Wave):
+                    game_state = thing.update(dt, timer.time)
+                    if game_state == "playing":
+                        timer.reset_time()
+
+After adding a extendal check the problem was resolved
 
 1. Calling a attribute from a int object in Timer class
 
