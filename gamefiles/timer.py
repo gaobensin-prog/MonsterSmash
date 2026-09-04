@@ -7,7 +7,9 @@ class Timer(Gameobject):
     def draw(self, screen, dt):
         if self.time > 0:
             self.time -= dt
-            print(self.time)
         font = pygame.font.Font(None, 32)
         time = font.render(str(round(self.time)), False, "red")
         screen.blit(time, (10, 5))
+
+    def reset_time(self, value = 10):
+        self.time = value

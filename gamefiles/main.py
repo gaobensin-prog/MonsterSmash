@@ -54,16 +54,29 @@ def main():
                 elif isinstance(thing, Score):
                     thing.update(spawner.dead)
                 else:
-                    game_state = thing.update(timer)
+                    game_state = thing.update(dt, timer.time)
             for attacker in attackable:
                 for target in attackable:
                     if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
                         attacker.attacking(target, dt)
-        for thing in drawable:
-            if isinstance(thing, Timer):
-                thing.draw(screen, dt)
-            else:
-                thing.draw(screen)
+            for thing in drawable:
+                if isinstance(thing, Timer):
+                    thing.draw(screen, dt)
+                else:
+                    thing.draw(screen)
+        if game_state == "upgrading":
+            for thing in drawable:
+                if isinstance(thing, Timer):
+                    thing.draw(screen, dt)
+                else:
+                    thing.draw(screen)
+            for thing in updatable:
+                if isinstance(thing, Wave):
+                    game_state = thing.update(dt, timer.time)
+                    if game_state == "playing":
+                        timer.reset_time()
+
+                
         #put everything on the screen
         pygame.display.flip()
         dt = clock.tick(60) / 1000
