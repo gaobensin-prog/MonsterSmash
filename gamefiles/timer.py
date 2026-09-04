@@ -1,6 +1,6 @@
 import pygame
 from gameobject import Gameobject
-from constant import wave_timer
+from constants import wave_timer
 class Timer(Gameobject):
     def __init__(self):
         super().__init__()
