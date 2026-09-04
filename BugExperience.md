@@ -1,4 +1,66 @@
 v0.0.0
+
+Bugs on (9/3/2026):
+2. Wave class not reseting the Timer class self.time when the 10 seconds of time for upgrading is up
+
+I was trying to set the Timer class value inside the Wave class which was not working because that means I was creating another instance of a Timer class and not the original one that exist in main.py 
+
+Code:
+
+    class Wave(Gameobject):
+        def __init__(self,timer):
+            super().__init__()
+            self.timer =timer
+            self.upgrade_time = 0
+        def update(self, dt, time):
+            if time <= 0 :
+                self.upgrade_time += dt
+                if self.upgrade_time >= 10:
+                    self.upgrade_time = 0
+                    self.timer.time = 10
+                    return "playing"
+                return "upgrading"
+            return "playing"
+Solution:
+
+Code:
+
+    class Wave(Gameobject):
+        def __init__(self):
+            super().__init__()
+            self.upgrade_time = 0
+        def update(self, dt, time):
+            if time <= 0 :
+                self.upgrade_time += dt
+                if self.upgrade_time >= 10:
+                    self.upgrade_time = 0
+                    return "playing"
+                return "upgrading"
+            return "playing"
+
+    #main.py
+    if game_state == "upgrading":
+            for thing in updatable:
+                if isinstance(thing, Wave):
+                    game_state = thing.update(dt, timer.time)
+                    if game_state == "playing":
+                        timer.reset_time()
+
+After adding a extendal check the problem was resolved
+
+1. Calling a attribute from a int object in Timer class
+
+Code:
+
+     self.time = time.time
+
+Solution:
+
+Seem like I need to switch the arguments of that method.
+
+I was wrong I meant to pass the Timer() class into the Wave() class but end up passing Timer().time instead so it was a int.
+
+
 Bugs on (9/1/2026):
 
 6. Even When the Player Attack is set to 1000 the Enemy is somehow only taking 10 damage but when the Player is at the topleft section of the screen somehow the attack it revert by to 1000.

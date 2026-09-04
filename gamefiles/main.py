@@ -6,6 +6,7 @@ from spawner import Spawner
 import random
 from timer import Timer
 from score import Score
+from wave import Wave
 def main():
     #just like git init we make the game file
     pygame.init()
@@ -28,7 +29,10 @@ def main():
     timer = Timer()
     Score.containers = (drawable, updatable)
     score = Score()
+    Wave.containers = (updatable,)
+    wave = Wave()
     running = True
+    game_state = "playing"
     while running:
         screen.fill("white")
         #check what the player is clicking on in the game
@@ -39,26 +43,40 @@ def main():
                 running = False
             if player not in updatable:
                 running = False
-        for thing in updatable:
-            if isinstance(thing, Enemy):
-                thing.update(player, dt, screen)
-            elif isinstance(thing, Spawner):
-                thing.update(dt, screen)
-            elif isinstance(thing, Player):
-                thing.update()
-            elif isinstance(thing, Score):
-                thing.update(spawner.dead)
-            else:
-                thing.update()
-        for thing in drawable:
-            if isinstance(thing, Timer):
-                thing.draw(screen, dt)
-            else:
-                thing.draw(screen)
-        for attacker in attackable:
-            for target in attackable:
-                if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
-                    attacker.attacking(target, dt)
+        if game_state == "playing":
+            for thing in updatable:
+                if isinstance(thing, Enemy):
+                    thing.update(player, dt, screen)
+                elif isinstance(thing, Spawner):
+                    thing.update(dt, screen)
+                elif isinstance(thing, Player):
+                    thing.update()
+                elif isinstance(thing, Score):
+                    thing.update(spawner.dead)
+                else:
+                    game_state = thing.update(dt, timer.time)
+            for attacker in attackable:
+                for target in attackable:
+                    if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
+                        attacker.attacking(target, dt)
+            for thing in drawable:
+                if isinstance(thing, Timer):
+                    thing.draw(screen, dt)
+                else:
+                    thing.draw(screen)
+        if game_state == "upgrading":
+            for thing in drawable:
+                if isinstance(thing, Timer):
+                    thing.draw(screen, dt)
+                else:
+                    thing.draw(screen)
+            for thing in updatable:
+                if isinstance(thing, Wave):
+                    game_state = thing.update(dt, timer.time)
+                    if game_state == "playing":
+                        timer.reset_time()
+
+                
         #put everything on the screen
         pygame.display.flip()
         dt = clock.tick(60) / 1000
