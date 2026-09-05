@@ -24,10 +24,18 @@ class Spawner(Gameobject):
             self.enemy.append(enemy)
             self.dt = 0
             if self.wave % 5 == 0 and self.boss_spawned == 0:
+                random_x = random.randint(0, screen_width)
+                random_y = random.randint(screen_length, 800)
                 self.boss_spawned += 1
-                boss = Boss("boss")
+                boss = Boss(random_x, random_y)
                 self.boss.append(boss)
-            if self.wave % 3 == 0:
+                if self.wave % 10 == 0:
+                    random_x = random.randint(0, screen_width)
+                    random_y = random.randint(screen_length, 800)
+                    boss = Boss(random_x, random_y)
+                    boss.update_image("bossman1.png")
+                    self.boss.append(boss)
+            elif self.wave % 5 != 0:
                 self.boss_spawned = 0
     def draw(self, screen):
         for enemy in self.enemy:
