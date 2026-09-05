@@ -32,14 +32,16 @@ def main():
     score = Score()
     Wave.containers = (updatable,)
     wave = Wave()
-    Upgrade.containers = (drawable,)
+    Upgrade.containers = (drawable, updatable)
     upgrade = Upgrade()
     running = True
     game_state = "playing"
+    action = ""
     while running:
         screen.fill("white")
         #check what the player is clicking on in the game
         for event in pygame.event.get():
+            action = event
             #check if the player click the X button
             if event.type == pygame.QUIT:
                 #if so turn the running to False so the while loop can stop
@@ -56,7 +58,7 @@ def main():
                     thing.update()
                 elif isinstance(thing, Score):
                     thing.update(spawner.dead)
-                else:
+                elif isinstance(thing, Wave):
                     game_state = thing.update(dt, timer.time)
             for attacker in attackable:
                 for target in attackable:
@@ -82,6 +84,10 @@ def main():
                     game_state = thing.update(dt, timer.time)
                     if game_state == "playing":
                         timer.reset_time()
+                elif isinstance(thing, Upgrade):
+                    if thing.update(action, player):
+                        timer.time = 10
+                    
 
                 
         #put everything on the screen
