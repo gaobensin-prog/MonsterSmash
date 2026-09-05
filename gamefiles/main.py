@@ -22,7 +22,7 @@ def main():
     drawable = pygame.sprite.Group()
     attackable = pygame.sprite.Group()
     Enemy.containers = (updatable, drawable, attackable)
-    enemy = Enemy(screen)
+    enemy = Enemy(-1000, -1000)
     Player.containers = (updatable, drawable, attackable)
     player = Player(50, 50)
     Spawner.containers = (updatable, drawable)
@@ -36,7 +36,6 @@ def main():
     Upgrade.containers = (drawable, updatable)
     upgrade = Upgrade()
     Boss.containers = (attackable, updatable, drawable)
-    boss = Boss()
     running = True
     game_state = "playing"
     while running:
@@ -57,13 +56,13 @@ def main():
                 if isinstance(thing, Enemy):
                     thing.update(player, dt, screen)
                 elif isinstance(thing, Spawner):
-                    thing.update(dt, screen)
+                    thing.update(dt, screen, wave.number)
                 elif isinstance(thing, Player):
                     thing.update()
                 elif isinstance(thing, Score):
-                    thing.update(spawner.dead)
+                    thing.update(spawner.give_dead())
                 elif isinstance(thing, Wave):
-                    game_state = thing.update(dt, timer.time, wave.number)
+                    game_state = thing.update(dt, timer.time)
             for attacker in attackable:
                 for target in attackable:
                     if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
@@ -84,11 +83,11 @@ def main():
                 else:
                     thing.draw(screen)
             for thing in updatable:
-                print(thing)
                 if isinstance(thing, Wave):
                     game_state = thing.update(dt, timer.time)
                     if game_state == "playing":
                         timer.reset_time()
+                        wave.number += 1
                     
 
                 

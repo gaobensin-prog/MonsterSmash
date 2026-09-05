@@ -5,25 +5,30 @@ import random
 from constants import screen_width,screen_length
 from boss import Boss
 class Spawner(Gameobject):
-    def __init__(self, screen):
+    def __init__(self):
         super().__init__()
         self.enemy = []
         self.boss = []
+        self.boss_spawned = 0
         self.dt = 0
         self.dead = []
         self.wave = 0
     def update(self, dt, screen, wave):
+        print(wave)
         random_x = random.randint(0, screen_width)
         random_y = random.randint(0, screen_length)
         self.dt += dt 
-        self.wave += wave.number
+        self.wave = wave
         if self.dt >= 1:
-            enemy = Enemy(screen, random_x, random_y)
+            enemy = Enemy(random_x, random_y)
             self.enemy.append(enemy)
             self.dt = 0
-        if self.wave % 5 == 0:
-            boss = Boss()
-            self.boss.append(boss)
+            if self.wave % 5 == 0 and self.boss_spawned == 0:
+                self.boss_spawned += 1
+                boss = Boss("boss")
+                self.boss.append(boss)
+            if self.wave % 3 == 0:
+                self.boss_spawned = 0
     def draw(self, screen):
         for enemy in self.enemy:
             if enemy.health <= 0:
@@ -37,4 +42,9 @@ class Spawner(Gameobject):
             self.enemy[i].draw(screen)
         for i in range(len(self.boss)):
             self.boss[i].draw(screen)
+
+    def give_dead(self):
+        dead = self.dead
+        self.dead = []
+        return dead
    

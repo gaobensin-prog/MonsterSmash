@@ -28,7 +28,6 @@ class Upgrade(Gameobject):
         if action.type == pygame.MOUSEBUTTONDOWN:
             for rect in self.option_list:
                 if (rect.collidepoint(action.pos)):
-                    print(rect)
                     upgrade = rect
             if upgrade == self.option1:
                 player.health += 10
