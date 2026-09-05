@@ -8,6 +8,7 @@ from timer import Timer
 from score import Score
 from wave import Wave
 from upgrade import Upgrade
+from boss import Boss
 def main():
     #just like git init we make the game file
     pygame.init()
@@ -25,7 +26,7 @@ def main():
     Player.containers = (updatable, drawable, attackable)
     player = Player(50, 50)
     Spawner.containers = (updatable, drawable)
-    spawner = Spawner(screen)
+    spawner = Spawner()
     Timer.containers = (drawable,)
     timer = Timer()
     Score.containers = (drawable, updatable)
@@ -34,6 +35,8 @@ def main():
     wave = Wave()
     Upgrade.containers = (drawable, updatable)
     upgrade = Upgrade()
+    Boss.containers = (attackable, updatable, drawable)
+    boss = Boss()
     running = True
     game_state = "playing"
     while running:
@@ -60,7 +63,7 @@ def main():
                 elif isinstance(thing, Score):
                     thing.update(spawner.dead)
                 elif isinstance(thing, Wave):
-                    game_state = thing.update(dt, timer.time)
+                    game_state = thing.update(dt, timer.time, wave.number)
             for attacker in attackable:
                 for target in attackable:
                     if target is not attacker and not (isinstance(target, Enemy) and isinstance(attacker, Enemy)):
