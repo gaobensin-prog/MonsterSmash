@@ -4,9 +4,8 @@ from gameobject import Gameobject
 import random
 from constants import screen_width,screen_length
 class Spawner(Gameobject):
-    def __init__(self, screen):
+    def __init__(self):
         super().__init__()
-        self.screen = screen
         self.enemy = []
         self.dt = 0
         self.dead = []
@@ -15,7 +14,7 @@ class Spawner(Gameobject):
         random_y = random.randint(0, screen_length)
         self.dt += dt 
         if self.dt >= 1:
-            enemy = Enemy(screen, random_x, random_y)
+            enemy = Enemy(random_x, random_y)
             self.enemy.append(enemy)
             self.dt = 0
     def draw(self, screen):
