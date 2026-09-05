@@ -1,9 +1,10 @@
 import pygame
 from gameobject import Gameobject
+from constants import wave_timer
 class Timer(Gameobject):
     def __init__(self):
         super().__init__()
-        self.time = 10
+        self.time = 0
     def draw(self, screen, dt):
         if self.time > 0:
             self.time -= dt
@@ -11,5 +12,6 @@ class Timer(Gameobject):
         time = font.render(str(round(self.time)), False, "red")
         screen.blit(time, (10, 5))
 
-    def reset_time(self, value = 10):
-        self.time = value
+    def reset_time(self, value = wave_timer):
+        
+        self.time = wave_timer

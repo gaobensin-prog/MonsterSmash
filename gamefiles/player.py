@@ -4,13 +4,13 @@ from getpictures import Picture
 import sys
 from constants import width_of_entity, height_of_entity
 class Player(Gameobject):
-    def __init__(self, screen, x: int  , y: int, image: str = "player.png") -> None:
+    def __init__(self, x: int  , y: int, image: str = "player.png") -> None:
         super().__init__()
         self.__picture = image
         self.health = 1000
         self.rect = pygame.Rect(x, y, width_of_entity, height_of_entity)
         self.cooldown = 0
-        self.attack = 1000
+        self.attack = 10
         self.defense = 2.5
     def update(self):
         keys = pygame.key.get_pressed()
@@ -44,13 +44,13 @@ class Player(Gameobject):
         screen.blit(surface, (self.rect.topleft))
 
     def attacking(self, enemy, dt):
-        self.cooldown += dt
         if (
             self.rect.left <= enemy.rect.right
             and self.rect.right  >= enemy.rect.left 
             and self.rect.bottom  >= enemy.rect.top 
             and self.rect.top  <= enemy.rect.bottom
-            and self.cooldown >= 1
         ):
             enemy.change_stat(enemy.health, self.attack, enemy.defense)
-            self.cooldown = 0 
+
+    def return_stats(self):
+        return {"Health": self.health, "Attack": self.attack, "Defense": self.defense}
