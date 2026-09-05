@@ -26,19 +26,15 @@ class Upgrade(Gameobject):
     def update(self, action, player):
         upgrade = ""
         if action.type == pygame.MOUSEBUTTONDOWN:
-            location = action.pos
             for rect in self.option_list:
-                if (
-                    location[0] in range(rect.topleft[0],rect.topright[0]) and
-                    location[1] in range(rect.topleft[1], rect.bottomright[1])
-                ):
+                if (rect.collidepoint(action.pos)):
+                    print(rect)
                     upgrade = rect
-        if upgrade == self.option1:
-            player.health += 10
+            if upgrade == self.option1:
+                player.health += 10
+            elif upgrade == self.option2:
+                player.attack += 10
+            elif upgrade == self.option3:
+                player.defense += 10
             return True
-        elif upgrade == self.option2:
-            player.attack += 10
-            return True
-        elif upgrade == self.option3:
-            player.defense += 10
-            return True
+        

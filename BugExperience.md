@@ -1,6 +1,13 @@
 v0.0.0
 
-Bugs on (9/3/2026):
+(9/4/2026):
+
+1.Attritude get increase twice instead of increasing once
+
+Solution used the pygame collidepoint()
+
+(9/3/2026):
+
 2. Wave class not reseting the Timer class self.time when the 10 seconds of time for upgrading is up
 
 I was trying to set the Timer class value inside the Wave class which was not working because that means I was creating another instance of a Timer class and not the original one that exist in main.py 

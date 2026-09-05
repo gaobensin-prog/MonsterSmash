@@ -36,12 +36,13 @@ def main():
     upgrade = Upgrade()
     running = True
     game_state = "playing"
-    action = ""
     while running:
         screen.fill("white")
         #check what the player is clicking on in the game
         for event in pygame.event.get():
-            action = event
+            value = upgrade.update(event, player)
+            if value:
+                timer.time = 60
             #check if the player click the X button
             if event.type == pygame.QUIT:
                 #if so turn the running to False so the while loop can stop
@@ -71,7 +72,7 @@ def main():
                     pass
                 else:
                     thing.draw(screen)
-        if game_state == "upgrading":
+        elif game_state == "upgrading":
             for thing in drawable:
                 if isinstance(thing, Timer):
                     thing.draw(screen, dt)
@@ -80,13 +81,11 @@ def main():
                 else:
                     thing.draw(screen)
             for thing in updatable:
+                print(thing)
                 if isinstance(thing, Wave):
                     game_state = thing.update(dt, timer.time)
                     if game_state == "playing":
                         timer.reset_time()
-                elif isinstance(thing, Upgrade):
-                    if thing.update(action, player):
-                        timer.time = 10
                     
 
                 

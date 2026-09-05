@@ -13,4 +13,5 @@ class Timer(Gameobject):
         screen.blit(time, (10, 5))
 
     def reset_time(self, value = wave_timer):
-        self.time = 10
+        
+        self.time = wave_timer
