@@ -12,6 +12,6 @@ class Timer(Gameobject):
         time = font.render(str(round(self.time)), False, "red")
         screen.blit(time, (10, 5))
 
-    def reset_time(self, value = wave_timer):
+    def reset_time(self, value = 10):
         
-        self.time = wave_timer
+        self.time = 5
