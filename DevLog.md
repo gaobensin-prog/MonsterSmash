@@ -32,6 +32,32 @@ Explanation:
 Create three Rect() object as a way for Player to click on which has not been completed yet.
 Draw() take the Player Stats as a dictonary to illirate over and display the stats in the Rect(). Soon the Player will be able to upgrade each stat after I code it.
 
+Code:
+
+    def update(self, action, player):
+        upgrade = ""
+        if action.type == pygame.MOUSEBUTTONDOWN:
+            location = action.pos
+            for rect in self.option_list:
+                if (
+                    location[0] in range(rect.topleft[0],rect.topright[0]) and
+                    location[1] in range(rect.topleft[1], rect.bottomright[1])
+                ):
+                    upgrade = rect
+        if upgrade == self.option1:
+            player.health += 10
+            return True
+        elif upgrade == self.option2:
+            player.attack += 10
+            return True
+        elif upgrade == self.option3:
+            player.defense += 10
+            return True
+
+Explanation:
+
+The action argument is feed in by the pygame.event.get() then it see is the feed in was a Mouse click, if so it take the mouse click location and compare it to each of the Rect area to see if the point lies in the rect area.
+
 (9/3/2026):
 
 1. Add Wave System
